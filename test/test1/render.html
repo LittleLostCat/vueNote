@@ -6,30 +6,95 @@
 </head>
 <body>
 	<div id="comp-1">
+		<input type="text" v-bind:value="level" v-on:input="level = Number($event.target.value)">
 		<anchored-heading :level="level">Hello world!</anchored-heading>
+	</div>
+	<div id="comp-2">
+	    {{message|uppercase}}
 	</div>
 </body>
 <script src="../../node_modules/vue/dist/vue.js"></script>
 <script>
-	Vue.component('anchored-heading', {
-	  render: function (createElement) {
-	    return createElement(
-	      'h' + this.level,   // tag name 标签名称
-	      this.$slots.default // 子组件中的阵列
-	    )
-	  },
-	  props: {
-	    level: {
-	      type: Number,
-	      required: true
-	    }
-	  }
-	})
-	var comp1 = new Vue({
-		el:"#comp-1",
-		data:{
-			level:"4"
-		},
-	})
+// Vue.component('anchored-heading', {
+//   render: function (createElement) {
+//     return createElement(
+//       'h' + this.level,   // tag name 标签名称
+//       this.$slots.default // 子组件中的阵列
+//     )
+//   },
+//   props: {
+//     level: {
+//       type: Number,
+//       required: true
+//     }
+//   }
+// })
+
+
+var getChildrenTextContent = function (children) {
+  return children.map(function (node) {
+    return node.children
+      ? getChildrenTextContent(node.children)
+      : node.text
+  }).join('')
+}
+
+Vue.component('anchored-heading', {
+  render: function (createElement) {
+    // create kebabCase id
+    var headingId = getChildrenTextContent(this.$slots.default)
+      .toLowerCase()
+      .replace(/\W+/g, '-')
+      .replace(/(^\-|\-$)/g, '')
+
+    return createElement(
+      'h' + this.level,
+      [
+        createElement('a', {
+          attrs: {
+            name: headingId,
+            href: '#' + headingId
+          }
+        }, this.$slots.default)
+      ]
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+
+var comp1 = new Vue({
+	el:"#comp-1",
+	data:{
+		level:4
+	},
+})
+
+
+// Vue.filter('uppercase', function(value) {
+//   	if (!value) { return ''}
+//   	value = value.toString()
+//   	return value.charAt(0).toUpperCase() + value.slice(1)
+// })
+var vm = new Vue({
+	el:"#comp-2",
+  	data: {
+    	message: 'test'
+  	},
+  	filters:{//末尾需要有s
+	    capitalize: function (value) {
+	      	return value.padEnd(5,"s").repeat(2)
+	    },
+	    uppercase:function(value) {
+		  	if (!value) { return ''}
+		  	value = value.toString()
+		  	return value.charAt(0).toUpperCase() + value.slice(1)
+	  	}
+	}
+})
 </script>
 </html>
