@@ -10,6 +10,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#appp',
   router,
-  template: '<App/>',
+  template: '<App/>',//<App></App>等同
   components: { App }
 })
+console.log(App,1)
