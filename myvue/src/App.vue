@@ -6,19 +6,25 @@
     </ul>
     <img src="./assets/logo.png">
     <router-view/>
+    <p>child tell:{{childWords}}</p>
+    <component-a msgfromfather='love!' v-on:child-tell='listenToMyBoy'></component-a>
   </div>
 </template>
 
 <script>
 import Store from './store'
+import ComponentA from './components/componentA'
 export default {
   name: 'app',
   data: function (){
     return{
       items:Store.fetch(),
-      newItem:'ss'
+      newItem:'ss',
+      childWords:'',//来自于子组件的值需要提前在data中声明
+      childWordsTo:'11',
     }
   },
+  components:{ComponentA},
   watch:{
     items:{
       handler:function(items){
@@ -39,7 +45,10 @@ export default {
         finished:false
       })
       this.newItem = ''
-    }
+    },
+    listenToMyBoy(msg){
+      this.childWords = msg;
+    },
   }
 }
 </script>
