@@ -1,31 +1,51 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
+//params通过name传值
+//query通过path传值
 
-const first = {template:'<div>first</div>'}
-const second = {template:'<div>second</div>'}
-const home = {template:'<div>home</div>'}
-const routerChild = {template:`
-		<div class='routerChild'>
-			<h2>组件</h2>
-			<router-view class='ab'></router-view>
+const users = {
+	template:`
+		<div>
+			<h2>Users</h2>
+			<router-view></router-view>
 		</div>
-	`}
-const firstF = {template:'<div>firstF</div>'}
-const secondS = {template:'<div>secondS</div>'}
+	`
+}
+const user = {
+	template:`
+		<div>
+			{{$route.params.username}}
+		</div>
+	`
+}
+const home = {
+	template:`
+		<div>
+			Home
+			{{$route.params}}
+		</div>
+	`
+}
+const about = {
+	template:`
+		<div>
+			Home
+			{{$route.params}}
+		</div>
+	`
+}
 const router = new VueRouter({
 	mode:'history',
 	base:__dirname,
 	routes:[
-		{path:'/',component:home},
-		{path:'/first',component:routerChild,
+		{path:'/',name:'Home',component:home},
+		{path:'/',name:'about',component:about},
+		{path:'/users',component:users,
 			children:[
-				{path:'/',component:first},
-				{path:'first',component:firstF},
-				{path:'second',component:secondS},
+				{path:':username',name:'user',component:user},
 			]
 		},
-		{path:'/second',component:second}
 	]
 })
 new Vue({
@@ -37,10 +57,12 @@ new Vue({
 				<li><router-link to='/'>/</router-link></li>
 				<li><router-link to='/first'>first</router-link></li>
 					<ol>
-						<li><router-link to='/first/first'>first</router-link></li>
-						<li><router-link to='/first/second'>second</router-link></li>
+						<li><router-link :to="{path:'/users/daniel',query:{aaa:'bbb'}}">first</router-link></li>
+						
+						<li><router-link :to="{path:'/users/daniel2',query:{aaa:'bbb'}}">first</router-link></li>
+						<li><router-link to="about" append>append</router-link></li>
+						<li><router-link to="aboutt" exact>append</router-link></li>
 					</ol>
-				<li><router-link to='/second'>second</router-link></li>
 			</ol>
 			<router-view class='a'></router-view>
 		</div>
