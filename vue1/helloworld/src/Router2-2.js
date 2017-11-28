@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-
+//直接在路由中通过routes来绑定参数
 const first = {template:'<div>first</div>'}
 const second = {template:'<div>second</div>'}
 const home = {template:'<div>home</div>'}
