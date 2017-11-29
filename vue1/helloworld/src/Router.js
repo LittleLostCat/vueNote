@@ -1,46 +1,30 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Parent from './transition.vue'
 Vue.use(VueRouter)
-//在使用:to绑定时
-//params通过name传值
-//query通过path传值
 
-const users = {
+const Home = {
 	template:`
 		<div>
-			<h2>Users</h2>
-			<router-view></router-view>
+			<h2>Home</h2>
+			<p>This is home</p>
 		</div>
 	`
 }
-const user = {
+
+// const Parent = {
+// 	template:`
+// 		<div>
+// 			<h2>Parent</h2>
+// 			<p>This is parent</p>
+// 		</div>
+// 	`
+// }
+
+const Page404 = {
 	template:`
 		<div>
-			{{$route.params.username}}
-		</div>
-	`
-}
-const home = {
-	template:`
-		<div>
-			Home
-			{{$route.params}}
-		</div>
-	`
-}
-const about = {
-	template:`
-		<div>
-			Home
-			{{$route.params}}
-		</div>
-	`
-}
-const first = {
-	template:`
-		<div>
-			Home
-			{{$route.params.id}}
+			<h2>error:404</h2>
 		</div>
 	`
 }
@@ -48,32 +32,46 @@ const router = new VueRouter({
 	mode:'history',
 	base:__dirname,
 	routes:[
-		{path:'/',name:'Home',component:home},
-		{path:'/',name:'about',component:about},
-		{path:'/first',name:'first',component:first},
-		{path:'/users',component:users,
-			children:[
-				{path:':username',name:'user',component:user},
-			]
-		},
+		{path:'/',component:Home},
+		{path:'/Parent',component:Parent},
+		{path:'*',component:Page404}
 	]
 })
+
 new Vue({
 	router,
+	data(){
+		return {
+			aaa:'fade'
+		}
+	},
 	template:`
-		<div id='r'>
-			<h1>导航</h1>
-			<ol>
-				<li><router-link to='/'>/</router-link></li>
-				<li><router-link :to="{name:'first',params:{id:'123'}}">first</router-link></li>
-					<ol>
-						<li><router-link :to="{path:'/users/daniel',query:{aaa:'bbb'}}">first</router-link></li>
-						<li><router-link :to="{path:'/users/daniel2',query:{aaa:'bbb'}}">first</router-link></li>
-						<li><router-link to="about" append>append</router-link></li>
-						<li><router-link to="aboutt" exact>append</router-link></li>
-					</ol>
-			</ol>
-			<router-view class='a'></router-view>
+		<div id="app">
+			<h1>This is Transition</h1>
+			<ul>
+				<li>
+					<router-link to='/'>/</router-link>
+				</li>
+				<li>
+					<router-link to='/Parent'>/Parent </router-link>
+				</li>
+				<li>
+					<router-link to='/ADADF'>NOT HERE </router-link>
+				</li>
+			</ul>
+			<transition :name="aaa" mode="out-in">
+				<router-view></router-view>
+			</transition>
 		</div>
-	`
-}).$mount('#app')
+	`,
+	watch:{
+		"$route"(to,from){
+			console.log(to);console.log(from);
+			if(from.path == '/Parent'){
+				this.aaa = 'fade1'
+			}else{
+				this.aaa = 'fade'
+			}
+		}
+	}
+}).$mount("#app")

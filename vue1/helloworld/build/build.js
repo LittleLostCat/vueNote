@@ -3,10 +3,10 @@ require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
 
-const ora = require('ora')
-const rm = require('rimraf')
+const ora = require('ora')//命令行环境的 loading效果
+const rm = require('rimraf')//用来删除文件的
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('chalk')//颜色的插件
 const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')

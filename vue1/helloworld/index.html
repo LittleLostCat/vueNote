@@ -12,6 +12,19 @@
 		li.router-link-active a{
 			color:#f66;
 		}
+    .fade1-enter-active,.fade-leave-active{
+      transition:opacity .5s;
+    }
+    .fade1-enter,.fade-leave-active{
+      opacity: 0;
+    }
+    .fade-enter-active,.fade-leave-active{
+      transition:background 1s ease-in,color .5s ease-out;
+    }
+    .fade-enter,.fade-leave-active{
+      background: #f6f6f6;
+      color: red;
+    }
   </style>
   <body>
     <div id="app"></div>
