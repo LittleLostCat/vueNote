@@ -17,6 +17,7 @@ const user = {
 	template:`
 		<div>
 			{{$route.params.username}}
+			{{$route.query.aaa}}
 		</div>
 	`
 }

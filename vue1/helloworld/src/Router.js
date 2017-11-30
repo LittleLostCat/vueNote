@@ -26,18 +26,29 @@ const Page404 = {
 		<div>
 			<h2>error:404</h2>
 		</div>
-	`
+	`,
+	beforeRouteEnter:(to,from,next)=>(
+		next();
+	),
+	beforeRouteLeave:(to,from,next)=>(
+		next();
+	)
 }
 const router = new VueRouter({
 	mode:'history',
 	base:__dirname,
 	routes:[
 		{path:'/',component:Home},
-		{path:'/Parent',component:Parent},
+		{path:'/Parent',component:Parent,
+			beforeEnter:(to,from,next)=>(
+				//next(false);
+				next({path:'/kkkkk'})//发生在路由执行前
+			)
+		},
 		{path:'*',component:Page404}
 	]
 })
-
+//routes中语法类似switch并带有break,在执行完'*'后会屏蔽后面的参数
 new Vue({
 	router,
 	data(){
@@ -47,6 +58,9 @@ new Vue({
 	},
 	template:`
 		<div id="app">
+			<button v-on:click="back">back</button>
+			<button v-on:click="forward">forward</button>
+			<button v-on:click="home">home</button>
 			<h1>This is Transition</h1>
 			<ul>
 				<li>
@@ -72,6 +86,17 @@ new Vue({
 			}else{
 				this.aaa = 'fade'
 			}
+		}
+	},
+	methods:{
+		back(){
+			router.go(-1)
+		},
+		forward(){
+			router.go(1)
+		},
+		home(){
+			router.push("/")
 		}
 	}
 }).$mount("#app")
