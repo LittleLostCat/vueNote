@@ -28,10 +28,10 @@ const Page404 = {
 		</div>
 	`,
 	beforeRouteEnter:(to,from,next)=>(
-		next();
+		next()
 	),
 	beforeRouteLeave:(to,from,next)=>(
-		next();
+		next()
 	)
 }
 const router = new VueRouter({
@@ -98,5 +98,35 @@ new Vue({
 		home(){
 			router.push("/")
 		}
+	},
+	beforeCreate:function(){
+		console.log("1-beforeCreate");
+	},
+	create:function(){
+		console.log("2-create");
+	},
+	beforeMount:function(){
+		console.log("3-beforeMount");
+	},
+	mounted:function(){
+		console.log("4-mount");
+	},
+	beforeUpdate:function(){
+		console.log("5-beforeCreate");
+	},
+	updated:function(){
+		console.log("6-updated");
+	},
+	activated:function(){
+		console.log("7-activated");
+	},
+	deactivated:function(){
+		console.log("8-deactivated");
+	},
+	beforeDestroy:function(){
+		console.log("9-beforeDestroy")
+	},
+	destroyed:function(){
+		console.log("9-destroyed")
 	}
 }).$mount("#app")
