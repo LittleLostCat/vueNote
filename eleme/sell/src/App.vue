@@ -37,4 +37,8 @@
     .tab-item
       flex:1
       text-align:center
+      a
+        color:black
+        text-decoration:none
+        display:block
 </style>
