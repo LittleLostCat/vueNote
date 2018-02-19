@@ -9,7 +9,6 @@ import router from './router/router'
 
 // Vue.use(VueRouter);
 /* eslint-disable no-new */
-console.log(router)
 new Vue({
   el: '#app',
   router,
