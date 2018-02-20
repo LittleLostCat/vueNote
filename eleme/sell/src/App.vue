@@ -12,6 +12,7 @@
         <router-link to="/sellers">商家</router-link>
       </div>
     </div>
+    <input type="button" @keydown='onkeyDown'>
     <router-view></router-view>
   </div>
 </template>
@@ -19,8 +20,18 @@
 <script>
   import header from './components/header/header.vue'
   export default {
+    data() {
+      return {
+        seller: {}
+      };
+    },
     components:{
       'v-header':header,
+    },
+    method: {
+      onkeyDown (){
+        console.log(233)
+      }
     }
   }
   // export default {
