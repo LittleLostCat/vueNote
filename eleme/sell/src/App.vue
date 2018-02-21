@@ -28,7 +28,7 @@
     components:{
       'v-header':header,
     },
-    method: {
+    methods: {
       onkeyDown (){
         console.log(233)
       }
